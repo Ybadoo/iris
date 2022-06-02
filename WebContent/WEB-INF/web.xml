@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (C) 2009/2022 - Cristiano Lehrer - ybadoo.com.br                  -->
+<!--                                                                             -->
+<!-- This file is part of IRIS WEBSERVICE (IRIS)                                 -->
+<!--                                                                             -->
+<!-- IRIS is free software: you can redistribute it and/or modify                -->
+<!-- it under the terms of the GNU Lesser General Public License as published by -->
+<!-- the Free Software Foundation, either version 3 of the License, or           -->
+<!-- (at your option) any later version.                                         -->
+<!--                                                                             -->
+<!-- IRIS is distributed in the hope that it will be useful,                     -->
+<!-- but WITHOUT ANY WARRANTY; without even the implied warranty of              -->
+<!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                -->
+<!-- GNU Lesser General Public License for more details.                         -->
+<!--                                                                             -->
+<!-- You should have received a copy of the GNU Lesser General Public License    -->
+<!-- along with IRIS. If not, see <http://www.gnu.org/licenses/>.                -->
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         id="WebApp_ID"
+         version="4.0">
+
+  <!--                                                                           -->
+  <!-- IRIS's configuration (Linux/Ubuntu default)                               -->
+  <!--                                                                           -->
+
+  <context-param>
+    <description>
+      Identifier unique of the host.
+      If multiple instances of the Iris.exe are used, identify each instance with a unique numeric identifier.
+      Type: int
+    </description>
+    <param-name>host.uid</param-name>
+    <param-value>1</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Iris.exe runs on the wine.
+      Type: boolean
+      Values: true or false
+    </description>
+    <param-name>host.iris.wine</param-name>
+    <param-value>true</param-value>
+    <!-- Microsoft Windows: false                                                -->
+  </context-param>
+
+  <context-param>
+    <description>
+      Iris.exe file address.
+      Type: String
+    </description>
+    <param-name>host.iris.executable</param-name>
+    <param-value>/home/iris/.wine/drive_c/Iris5.8.1/Iris.exe</param-value>
+    <!-- Microsoft Windows: C:\\Iris5.8.1\\Iris.exe                              -->
+  </context-param>
+
+  <context-param>
+    <description>
+      Timeout waiting for Iris.exe response, in seconds.
+      Type: long
+    </description>
+    <param-name>host.iris.timeout</param-name>
+    <param-value>180</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Type of connection in the Certificate Database Tab of Iris.exe.
+      Type: String
+      Values: OLEDB, MySQL or PostgreSQL
+    </description>
+    <param-name>host.iris.server</param-name>
+    <param-value>PostgreSQL</param-value>
+  </context-param>
+
+
+  <!--                                                                           -->
+  <!-- If type of connection in the Certificate Database Tab of Iris.exe is      -->
+  <!-- OLEDB, fill in the next params                                            -->
+  <!--                                                                           -->
+
+  <context-param>
+    <description>
+      Iris-Certificates.mdb file address.
+      Type: String
+    </description>
+    <param-name>host.OLEDB.datasource</param-name>
+    <param-value>/home/iris/.wine/drive_c/Iris5.8.1/Iris-Certificates-V5.8-Y2021S1.mdb</param-value>
+    <!-- Microsoft Windows: C:\\Iris5.8.1\\Iris-Certificates-V5.8-Y2021S1.mdb    -->
+  </context-param>
+
+  <context-param>
+    <description>
+      Iris-Certificates.mdb file lot name.
+      Type: String
+    </description>
+    <param-name>host.OLEDB.lotName</param-name>
+    <param-value>Test</param-value>
+    <!-- Use one of the lots available in the Iris-Certificates-V5.8-Y2021S1.mdb -->
+  </context-param>
+
+
+  <!--                                                                           -->
+  <!-- Configuration of host database                                            -->
+  <!-- If type of connection in the Certificate Database Tab of Iris.exe is      -->
+  <!-- MySQL or PostgreSQL, uses the same configuration                          -->
+  <!--                                                                           -->
+
+  <context-param>
+    <description>
+      Host database server.
+      Type: String
+      Values: MySQL or PostgreSQL
+    </description>
+    <param-name>host.database.server</param-name>
+    <param-value>PostgreSQL</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Host database url.
+      Type: String
+    </description>
+    <param-name>host.database.url</param-name>
+    <param-value>pgsql.company.com.br:5432/iris</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Host Database schema.
+      Type: String
+    </description>
+    <param-name>host.database.schema</param-name>
+    <param-value>public</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Host database user.
+      Type: String
+    </description>
+    <param-name>host.database.user</param-name>
+    <param-value>postgres</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Host database password.
+      Type: String
+    </description>
+    <param-name>host.database.password</param-name>
+    <param-value>postgres</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Mask for format for printing and parsing date/time objects.
+      Type: String
+    </description>
+    <param-name>host.database.dateTimePattern</param-name>
+    <param-value>yyyy-MM-dd HH:mm:ss</param-value>
+  </context-param>
+
+
+  <!--                                                                           -->
+  <!-- Cluster Database Configuration                                            -->
+  <!--                                                                           -->
+  <!-- Database configuration where the 'icd10codes', 'category' and 'level'     -->
+  <!-- tables are located. If only one instance of this service is used, these   -->
+  <!-- tables must be located in the host database                               -->
+
+
+
+  <context-param>
+    <description>
+      Cluster available.
+      Type: boolean
+      Values: true or false
+    </description>
+    <param-name>cluster.available</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+
+  <!--                                                                           -->
+  <!-- If cluster is available, fill in the next params                          -->
+  <!--                                                                           -->
+
+  <context-param>
+    <description>
+      Cluster database server.
+      Type: String
+      Values: MySQL or PostgreSQL
+    </description>
+    <param-name>cluster.database.server</param-name>
+    <param-value>PostgreSQL</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Cluster Database url.
+      Type: String
+    </description>
+    <param-name>cluster.database.url</param-name>
+    <param-value>pgsql.company.com.br:5432/iris</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Cluster Database schema.
+      Type: String
+    </description>
+    <param-name>cluster.database.schema</param-name>
+    <param-value>cluster</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Cluster Database user.
+      Type: String
+    </description>
+    <param-name>cluster.database.user</param-name>
+    <param-value>postgres</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Cluster Database password.
+      Type: String
+    </description>
+    <param-name>cluster.database.password</param-name>
+    <param-value>postgres</param-value>
+  </context-param>
+
+  <!--                                                                           -->
+  <!-- Tomcat configuration                                                      -->
+  <!--                                                                           -->
+
+  <display-name>IRIS WEBSERVICE</display-name>
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/404.jsp</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/400.jsp</location>
+  </error-page>
+
+  <filter>
+    <filter-name>SetCharacterEncodingFilter</filter-name>
+    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>AddDefaultCharsetFilter</filter-name>
+    <filter-class>org.apache.catalina.filters.AddDefaultCharsetFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>CorsFilter</filter-name>
+    <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+    <init-param>
+      <param-name>cors.allowed.origins</param-name>
+      <param-value>*</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.allowed.methods</param-name>
+      <param-value>POST</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.exposed.headers</param-name>
+      <param-value>Access-Control-Allow-Origin</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>SetCharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>AddDefaultCharsetFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>CorsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+</web-app>
